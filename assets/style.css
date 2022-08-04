@@ -62,3 +62,20 @@
     margin:40px 0;
     font-size:20px;
   }
+
+  li.btn.btn-primary {
+    width: 90%;
+    margin: 10px;
+}
+ol, ul {
+  padding-left: 0px!important;
+}
+
+.card.col-3 {
+  margin-right: 0.25rem;
+  margin-left: -0.25rem;
+}
+.card.col-9 {
+  margin-right: -0.25rem;
+  margin-left: 0.25rem;
+}
