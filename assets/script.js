@@ -39,7 +39,11 @@ button
         var weatherIconSingle = data.weather[0].icon;
         var nameValue = data.name;
         var descValue = data.weather[0].description;
+        var lat = data.coord.lat;
+        var lon = data.coord.lon;
 
+        console.log(lat);
+        console.log(lon);
         main.innerHTML = nameValue;
         desc.innerHTML = descValue;
         cels.innerHTML =
@@ -83,7 +87,21 @@ button
         //heatel.append(cels.innerHTML);
 
         //  nameValue.array.forEach(element => {
-
+        fetch(
+          "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+            lat +
+            "&lon=" +
+            lon +
+            "&exclude=minutely,hourly,alerts&units=imperial&appid=2fbcfe867dec88d47dfa684266904944"
+        )
+          .then((response) => response.json())
+          .then((response) => console.log(response))
+          .then((data) => {
+            console.log(data);
+            // -
+            var uvi = data.current.clouds;
+            console.log(uvi);
+          });
         fetch(
           "https://api.openweathermap.org/data/2.5/forecast?q=" +
             nameValue +
@@ -136,7 +154,6 @@ button
                 break;
               }
             }
-            console.log(dataForecast);
 
             var date = data["list"]["dt_text"];
             // var temp_maxValue = data['main']['temp_max'];
