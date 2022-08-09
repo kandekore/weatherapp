@@ -82,3 +82,25 @@ ul {
 div#list5day {
   display: inline-flex;
 }
+.card.col-2 {
+  background: #306bfa;
+  color: #fff;
+}
+h6.card-subtitle.mb-2.text-muted {
+  color: #fff !important;
+}
+#list5day p.card-text {
+  font-size: 15px;
+}
+.card-body {
+  padding: 10px !important;
+}
+h6.card-subtitle.mb-2.text-muted {
+  text-align: center;
+}
+h5.card-title {
+  text-align: center;
+}
+.card-body.main {
+  display: inline-flex;
+}

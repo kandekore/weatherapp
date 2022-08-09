@@ -11,7 +11,9 @@ var clouds = document.querySelector(".clouds");
 var button = document.querySelector(".submit");
 var listItemEl = $("#listitem");
 var list5Day = $("#list5day");
+var list5DayHead = $("#list5dayhead");
 var dateStamp = moment().format("MMM DD, YYYY");
+//var weatherIconSingle = data.list.weather[0].icon;
 //var heatel = $('#bullet')
 
 button
@@ -22,27 +24,41 @@ button
       "https://api.openweathermap.org/data/2.5/weather?q=" +
         input.value +
         "&appid=50a7aa80fa492fa92e874d23ad061374"
+      // "https://api.openweathermap.org/geo/1.0/direct?q=" +
+      //   input.Value +
+      //   "&limit=5&appid=50a7aa80fa492fa92e874d23ad061374"
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
+
         var tempValue = data.main.temp;
         var temp_maxValue = data.main.temp_max;
         var temp_minValue = data.main.temp_min;
         var feelsLikeValue = data.main.feels_like;
-
+        var weatherIconSingle = data.weather[0].icon;
         var nameValue = data.name;
         var descValue = data.weather[0].description;
 
         main.innerHTML = nameValue;
         desc.innerHTML = descValue;
-        cels.innerHTML = (tempValue - 273.15).toFixed(0) + "	&#8451;";
+        cels.innerHTML =
+          (tempValue - 273.15).toFixed(0) +
+          "	&#8451; /" +
+          (tempValue - 273.15 + 32).toFixed(0) +
+          " &#8457; ";
         maxTemp.innerHTML =
-          "Max Celsius - " + (temp_maxValue - 273.15).toFixed(0);
+          "&nbsp;Max temp - " +
+          (temp_maxValue - 273.15).toFixed(0) +
+          "	&#8451; /" +
+          (temp_maxValue - 273.15 + 32).toFixed(0) +
+          " &#8457;";
         minTemp.innerHTML =
-          "Min Celsius - " + (temp_minValue - 273.15).toFixed(0);
+          "Min - " + (temp_minValue - 273.15).toFixed(0) + "	&#8451;";
         feelsLike.innerHTML =
-          "Feels Like Celsius - " + (feelsLikeValue - 273.15).toFixed(0);
-        fah.innerHTML = "Fahrenheit - " + (tempValue - 273.15 + 32).toFixed(0);
+          "Feels Like - " + (feelsLikeValue - 273.15).toFixed(0) + "	&#8451;";
+        // fah.innerHTML =
+        //   "Fahrenheit - " + (tempValue - 273.15 + 32).toFixed(0) + " &#8457;";
         input.value = "";
 
         localStorage.setItem("recentSearch", nameValue);
@@ -55,9 +71,11 @@ button
         listItemEl.append(
           '<li class="btn btn-primary" onclick="(name)"><h3> ' +
             main.innerHTML +
-            "</h3> <ul>" +
+            '<img src="https://openweathermap.org/img/wn/' +
+            weatherIconSingle +
+            '.png"></h3> <ul>' +
             cels.innerHTML +
-            " and " +
+            "<br> " +
             desc.innerHTML +
             "</ul>" +
             "</li>"
@@ -72,29 +90,45 @@ button
             "&appid=2fbcfe867dec88d47dfa684266904944"
         )
           .then((response) => response.json())
+          // .then((response) => console.log(response.data))
           .then((data) => {
             //const data_1 = JSON.stringify(data);
             // var date = data[i].dt_txt;
             // var setD = date.substr(0, 10);
             // var temp = data[i].main.temp;
-            // var hum = data[i].main.humidity;
+            // var hum = data[i]-.main.humidity;
             const dataForecast = [];
-
+            list5DayHead.append(
+              '<h2 class="heading">Five day Forecast for ' + nameValue + "</h2>"
+            );
             for (let i = 0; i < 5; i = i + 1) {
               dataForecast.push(data.list[i * 8] % 5);
+              console.log(data);
 
               var dateFive = moment(data.list[i * 8].dt_txt).format("DD, MMM");
               //var setD = date.list.substr(0, 10);
               var temp = data.list[i].main.temp;
               var hum = data.list[i].main.humidity;
               var celsfive = (temp - 273.15).toFixed(0) + "	&#8451;";
+              var farFive = (temp - 273.15 + 32).toFixed(0) + " &#8457;";
+              var weatherIcon = data.list[i].weather[0].icon;
+              var fiveDayDesc = data.list[i].weather[0].description;
+              //var dateimgSrc = "https://openweathermap.org/img/wn/" + (this["weatherIcon"+i]) + ".png";
 
               list5Day.append(
                 '<div class="card col-2"> <div class="card-body"><h5 class="card-title">' +
                   dateFive +
+                  '<img src="https://openweathermap.org/img/wn/' +
+                  weatherIcon +
+                  '.png"' +
                   '</h5> <h6 class="card-subtitle mb-2 text-muted">' +
                   celsfive +
-                  '</h6><p class="card-text">' +
+                  " / " +
+                  farFive +
+                  '<p class="card-text">' +
+                  fiveDayDesc +
+                  "</p>" +
+                  '</h6><p class="card-text"> Humidity: ' +
                   hum +
                   "</p></div>"
               );
