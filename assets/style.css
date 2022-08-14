@@ -62,7 +62,7 @@ input[type="submit"] {
   font-size: 20px;
 }
 
-li.btn.btn-primary {
+.btn.btn-primary {
   width: 90%;
   margin: 10px;
 }
