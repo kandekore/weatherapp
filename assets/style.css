@@ -83,7 +83,7 @@ div#list5day {
   display: inline-flex;
 }
 .card.col-2 {
-  background: #306bfa;
+  background: #7192c5;
   color: #fff;
 }
 h6.card-subtitle.mb-2.text-muted {
@@ -113,7 +113,15 @@ a.navbar-brand {
   background-image: url(https://thumbs.dreamstime.com/b/big-blue-sky-white-clouds-large-hi-res-file-33863007.jpg);
   height: 250px;
 }
-
+.card-header {
+  background: #7192c5!important;
+  height: 80px;
+  color: #fff!important;
+  margin-bottom: 20px;
+    text-shadow: 3px 3px black;
+    font-size: 30px;
+  
+}
 .navbar-brand {
 
   color: #fff!important;
@@ -141,4 +149,7 @@ input.submit.btn {
   /* border-color: var(--bs-btn-hover-border-color); */
   background: #fff!important;
   color: #7192c5!important;
+}
+button.btn.btn-primary {
+  background: #7192c5;
 }
