@@ -6,7 +6,7 @@
 
 body {
   font-family: "Nunito", sans-serif;
-  background: #f8f8f8;
+  background: #7192c5!important;
 }
 
 .input {
@@ -103,4 +103,42 @@ h5.card-title {
 }
 .card-body.main {
   display: inline-flex;
+}
+a.navbar-brand {
+  font-size: 50px;
+}
+.bg-light {
+  --bs-bg-opacity: 1;
+  /* background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity))!important; */
+  background-image: url(https://thumbs.dreamstime.com/b/big-blue-sky-white-clouds-large-hi-res-file-33863007.jpg);
+  height: 250px;
+}
+
+.navbar-brand {
+
+  color: #fff!important;
+
+  text-shadow: 3px 3px black;
+}
+input#myInput {
+  width: 600px;
+}
+
+.bg-light {
+  /* --bs-bg-opacity: 1; */
+  /* background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity))!important; */
+  border-bottom: 30px solid #000;
+}
+input.submit.btn {
+  border: 1px solid black;
+  background: #7192c5;
+  color: #fff;
+  
+}
+.btn:hover {
+  /* color: var(--bs-btn-hover-color); */
+  /* background-color: var(--bs-btn-hover-bg); */
+  /* border-color: var(--bs-btn-hover-border-color); */
+  background: #fff!important;
+  color: #7192c5!important;
 }
