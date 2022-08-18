@@ -258,7 +258,8 @@ function forecastCall(nameValue) {
       }
 
       var date = data["list"]["dt_text"];
-    });
+    })
+    .catch(err => alert("City Name Not Found!"));
 }
 function searchButtonHandler(event) {
   var cityName = event.target.innerText;
