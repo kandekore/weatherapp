@@ -1,5 +1,6 @@
 var input = document.querySelector(".input_text");
 var main = document.querySelector("#name");
+var weatherIconSingle = document.querySelector(".icon");
 var cels = document.querySelector(".cels");
 var fah = document.querySelector(".fah");
 var maxTemp = document.querySelector(".max");
@@ -14,17 +15,48 @@ var list5Day = $("#list5day");
 var list5DayHead = $("#list5dayhead");
 var dateStamp = moment().format("MMM DD, YYYY");
 var uvInfo = document.querySelector(".uvbutton");
+var recentSearch =[" "]
+// document.getElementById('listitem').innerHTML = window.localStorage.getItem('recentSearch')
+let history = localStorage.getItem("recentSearch")
+// $("#listItemEl").append(history);
+recentSearch.push(history)
+if (history === null) {
+  var recentSearch =[" "]
+}
 
-//var weatherIconSingle = data.list.weather[0].icon;
+ else{
+document.getElementById('listitem').innerHTML = window.localStorage.getItem('recentSearch').replace(/","/g, "")
+      .replace(/[[]/g, "")
+      .replace(/]/g, "")
+      .replace(/["]/g, "")
+      .replace(/[,]/g, "")
+      .replace(/\\/g, "");
+    }
+
+    
+
+console.log(history)
+
 //var heatel = $('#bullet')
 
 button.addEventListener("click", function (event) {
   event.preventDefault();
+  $(".uvbutton")
+  .empty()
+  $(".icon")
+  .empty()
+ 
   currentWeather(event);
+  
+  
 });
 
 function currentWeather(event) {
   var cityName = input.value;
+  listItemEl.append(
+    "<button class='btn btn-primary'>"+cityName+"</button>"
+  );
+
 
   fetch(
     "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -34,51 +66,78 @@ function currentWeather(event) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-
+      var weatherIcons = data.weather[0].icon;
       var tempValue = data.main.temp;
       var temp_maxValue = data.main.temp_max;
       var temp_minValue = data.main.temp_min;
       var feelsLikeValue = data.main.feels_like;
-      var weatherIconSingle = data.weather[0].icon;
+      var weatherIconSingle = "<img src='https://openweathermap.org/img/wn/"+weatherIcons+".png>'";
       var nameValue = data.name;
       var descValue = data.weather[0].description;
       var lat = data.coord.lat;
       var lon = data.coord.lon;
+     
 
       console.log(lat);
       console.log(lon);
       main.innerHTML = nameValue;
       desc.innerHTML = descValue;
-      cels.innerHTML =
+      
+      // console.log(weatherIconSingle.innerHTML)
+      console.log(weatherIconSingle);
+      console.log(weatherIconSingle.innerHTML)
+      weatherIconSingle.innerHTML = "<img class='iconpic' src='https://openweathermap.org/img/wn/"+weatherIcons+".png'>";
+     
+      $(".icon").append("<img class='iconpic' src='https://openweathermap.org/img/wn/"+weatherIcons+".png'>");
+      cels.innerHTML = "<i class='fa fa-thermometer-half' aria-hidden='true'></i>" +
         (tempValue - 273.15).toFixed(0) +
         "	&#8451; /" +
         (tempValue - 273.15 + 32).toFixed(0) +
         " &#8457; ";
       maxTemp.innerHTML =
-        "&nbsp;Max temp - " +
+        "&nbsp;Maximum Temperature<br>" +
         (temp_maxValue - 273.15).toFixed(0) +
-        "	&#8451; /" +
+        "	&#8451; / " +
         (temp_maxValue - 273.15 + 32).toFixed(0) +
         " &#8457;";
       minTemp.innerHTML =
-        "Min - " + (temp_minValue - 273.15).toFixed(0) + "	&#8451;";
+        "Minimum Temperature<br>" + (temp_minValue - 273.15).toFixed(0) + "	&#8451; / " + (temp_minValue - 273.15 + 32).toFixed(0) +
+        " &#8457;";
       feelsLike.innerHTML =
-        "Feels Like - " + (feelsLikeValue - 273.15).toFixed(0) + "	&#8451;";
+        "Feels Like<br> " + (feelsLikeValue - 273.15).toFixed(0) + "	&#8451; / " + (feelsLikeValue - 273.15 + 32).toFixed(0) +
+        " &#8457;";
       input.value = "";
 
       var textContent = main.innerHTML;
       var storearr = [];
       storearr.push(textContent);
       localStorage.setItem("cityName", main.innerHTML);
+      
 
       console.log(textContent);
-      localStorage.setItem("recentSearch", nameValue);
+      recentSearch.push("<button class='btn btn-primary'>"+nameValue+"</button>")
+      function cityStore(){
+        var newinput = input.value;
+        recentSearch.push(newinput);
+        var cityString = JSON.stringify(recentSearch);
+        window.localStorage.setItem("recentSearch", cityString);
+        
+      
+      }
+      
+      cityStore();
+
+      
+      ;
+
+
 
       console.log(JSON.stringify(data));
 
-      listItemEl.append(
-        `<button class='btn btn-primary'> ${main.innerHTML}</button>`
-      );
+      
+        // `<button class='btn btn-primary'> ${main.innerHTML}</button>`
+        // document.getElementById('listitem').innerHTML = window.localStorage.getItem('recentSearch')
+      
 
       UviCall(lat, lon);
       forecastCall(nameValue);
@@ -106,7 +165,7 @@ function UviCall(lat, lon) {
       console.log(uvi.innerHTML);
       var uvIndHtml = info.current.uvi;
       html +=
-        "<button class='btn primarybtn' id= 'uvInfo' > " +
+        "UV-Index:<button class='btn primarybtn' id= 'uvInfo' > " +
         uvIndHtml +
         "</button>";
       if (info.current.uvi < 3) {
@@ -114,51 +173,35 @@ function UviCall(lat, lon) {
           .append(html)
           .attr(
             "style",
-            "background-color:green; color:black; margin-left: 5px"
+            "background-color:green; color:black;"
           );
       } else if (info.current.uvi < 6) {
         $(uvInfo)
           .append(html)
           .attr(
             "style",
-            "background-color:yellow; color:black; margin-left: 5px"
+            "background-color:yellow; color:black; "
           );
       } else if (info.current.uvi < 8) {
         $(uvInfo)
           .append(html)
           .attr(
             "style",
-            "background-color:orange; color:black; margin-left: 5px"
+            "background-color:orange; color:black;"
           );
       } else if (info.current.uvi < 11) {
         $(uvInfo)
           .append(html)
-          .attr("style", "background-color:red; color:black; margin-left: 5px");
+          .attr("style", "background-color:red; color:black;");
       } else {
         $(uvInfo)
           .append(html)
           .attr(
             "style",
-            "background-color:purple; color:black; margin-left: 5px"
+            "background-color:purple; color:black;"
           );
       }
 
-      // $(uvInfo).append(
-      //   html
-      //   // "<button class='btn primarybtn' id= 'uvInfo' > " +
-      //   //   uvIndHtml +
-      //   //   "</button>"
-      // );
-
-      //
-
-      // $(".city").append(uvIndex)
-      // var uvIndex = $("<div>")
-      // var uvi =$("<div>")
-      // uvIndex.text("UV Index: ");
-      // uvi.text(data.current.uvi)
-      // uvIndex.append(uvi)
-      // uvIndex.addClass("d-flex")
     });
 }
 $(uvInfo).empty();
@@ -220,7 +263,9 @@ function forecastCall(nameValue) {
 function searchButtonHandler(event) {
   var cityName = event.target.innerText;
   var mainCityName = event.target.innerText;
-
+  $(".icon")
+  .empty()
+$(uvInfo).empty();
   forecastCall(cityName);
   document.getElementById("myInput").value = event.target.innerText;
   console.log(event.target.id);

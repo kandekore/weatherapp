@@ -58,7 +58,7 @@ input[type="submit"] {
 
 .card p {
   text-align: center;
-  margin: 40px 0;
+  /* margin: 40px 0; */
   font-size: 20px;
 }
 
@@ -152,4 +152,55 @@ input.submit.btn {
 }
 button.btn.btn-primary {
   background: #7192c5;
+  text-shadow: 1px 1px black;
+}
+.range.col-12 {
+  display: flex;
+}
+img.iconpic {
+  width: 100px;
+}
+p.desc {
+  margin-top: -30px;
+  font-weight: 700;
+}
+p.cels {
+  font-size: 50px;
+}
+button.uvbutton {
+  border-radius: 5px;
+  color: #fff;
+}
+button#uvInfo {
+  font-size: 40px;
+  text-shadow: 1px 1px white;
+  /* padding-bottom: 5px; */
+  margin-bottom: 9px;
+  font-weight: 700;
+}
+button.uvbutton {
+  padding: 10px;
+  font-size: 40px;
+}
+p.uvbutton {
+  width: 50%;
+  margin-left: 25%;
+  border-radius: 25px;
+  text-shadow: 1px 1px white;
+  font-weight: 700;
+  font-size: 40px;
+}
+.range.col-12 {
+  font-weight: 700;
+  text-shadow: 1px 1px white;
+}
+.card.col-9 {
+  background: lightgrey;
+}
+.card.col-3 {
+  background: lightgrey;
+}
+h2.heading {
+  text-align: center;
+  text-shadow: 1px 1px white;
 }
