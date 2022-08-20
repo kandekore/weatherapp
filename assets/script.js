@@ -15,6 +15,8 @@ var list5Day = $("#list5day");
 var list5DayHead = $("#list5dayhead");
 var dateStamp = moment().format("MMM DD, YYYY");
 var uvInfo = document.querySelector(".uvbutton");
+
+
 var recentSearch =[" "]
 // document.getElementById('listitem').innerHTML = window.localStorage.getItem('recentSearch')
 let history = localStorage.getItem("recentSearch")
@@ -45,14 +47,26 @@ button.addEventListener("click", function (event) {
   .empty()
   $(".icon")
   .empty()
+  $(".date")
+  .empty()
+
  
   currentWeather(event);
+ 
+
+
   
   
 });
 
 function currentWeather(event) {
+  $(".humidity")
+  .empty()
+  $(".wind")
+  .empty()
+
   var cityName = input.value;
+  
   listItemEl.append(
     "<button class='btn btn-primary'>"+cityName+"</button>"
   );
@@ -62,10 +76,14 @@ function currentWeather(event) {
     "https://api.openweathermap.org/data/2.5/weather?q=" +
       cityName +
       "&appid=50a7aa80fa492fa92e874d23ad061374"
+      
   )
+  // .catch(err).alert("City Name Not Found!")
+  
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      
+      console.log(data)
       var weatherIcons = data.weather[0].icon;
       var tempValue = data.main.temp;
       var temp_maxValue = data.main.temp_max;
@@ -76,6 +94,9 @@ function currentWeather(event) {
       var descValue = data.weather[0].description;
       var lat = data.coord.lat;
       var lon = data.coord.lon;
+     var humidity = data.main.humidity;
+     var windspeed = data.wind.speed;
+  
      
 
       console.log(lat);
@@ -91,7 +112,7 @@ function currentWeather(event) {
       $(".icon").append("<img class='iconpic' src='https://openweathermap.org/img/wn/"+weatherIcons+".png'>");
       cels.innerHTML = "<i class='fa fa-thermometer-half' aria-hidden='true'></i>" +
         (tempValue - 273.15).toFixed(0) +
-        "	&#8451; /" +
+        "	&#8451; / " +
         (tempValue - 273.15 + 32).toFixed(0) +
         " &#8457; ";
       maxTemp.innerHTML =
@@ -106,6 +127,8 @@ function currentWeather(event) {
       feelsLike.innerHTML =
         "Feels Like<br> " + (feelsLikeValue - 273.15).toFixed(0) + "	&#8451; / " + (feelsLikeValue - 273.15 + 32).toFixed(0) +
         " &#8457;";
+        $(".humidity").append("<strong>Humiditiy: " +humidity+"</strong>").text()
+        $(".wind").append("<strong>Wind Speed: " +windspeed+"</strong>").text()
       input.value = "";
 
       var textContent = main.innerHTML;
@@ -116,19 +139,22 @@ function currentWeather(event) {
 
       console.log(textContent);
       recentSearch.push("<button class='btn btn-primary'>"+nameValue+"</button>")
+
       function cityStore(){
+        
         var newinput = input.value;
+        
         recentSearch.push(newinput);
         var cityString = JSON.stringify(recentSearch);
         window.localStorage.setItem("recentSearch", cityString);
         
       
-      }
+          }
       
       cityStore();
 
       
-      ;
+    
 
 
 
@@ -141,8 +167,11 @@ function currentWeather(event) {
 
       UviCall(lat, lon);
       forecastCall(nameValue);
-    });
+      
+    })
+   .catch(err => alert("City Name Not Found!"));
 }
+
 const uvForecast = [];
 function UviCall(lat, lon) {
   fetch(
@@ -156,7 +185,8 @@ function UviCall(lat, lon) {
     //.then((response) => console.log(response))
     .then((info) => {
       console.log(info);
-      $(uvInfo).empty;
+      $(uvInfo).empty;  
+     
       html = " ";
       uvForecast.push(info.current % 1);
       var uvi = info.current.uvi;
@@ -164,6 +194,9 @@ function UviCall(lat, lon) {
       uvi.innerHTML = uvi;
       console.log(uvi.innerHTML);
       var uvIndHtml = info.current.uvi;
+      // var dt = info.current.sunrise;
+      var today = moment().format("MMMM Do YYYY");
+ $(".date").append(today)
       html +=
         "UV-Index:<button class='btn primarybtn' id= 'uvInfo' > " +
         uvIndHtml +
@@ -199,10 +232,11 @@ function UviCall(lat, lon) {
           .attr(
             "style",
             "background-color:purple; color:black;"
-          );
+          ) 
       }
 
-    });
+    })
+    
 }
 $(uvInfo).empty();
 
@@ -217,6 +251,7 @@ function forecastCall(nameValue) {
     .then((response) => response.json())
     // .then((response) => console.log(response.data))
     .then((data) => {
+      
       list5DayHead.empty();
       list5Day.empty();
 
@@ -232,6 +267,7 @@ function forecastCall(nameValue) {
         //var setD = date.list.substr(0, 10);
         var temp = data.list[i].main.temp;
         var hum = data.list[i].main.humidity;
+        var winds = data.list[i].wind.speed;
         var celsfive = (temp - 273.15).toFixed(0) + "	&#8451;";
         var farFive = (temp - 273.15 + 32).toFixed(0) + " &#8457;";
         var weatherIcon = data.list[i].weather[0].icon;
@@ -251,20 +287,24 @@ function forecastCall(nameValue) {
             '<p class="card-text">' +
             fiveDayDesc +
             "</p>" +
-            '</h6><p class="card-text"> Humidity: ' +
+            '</h6><p class="card-text"> Humidity:<br>' +
             hum +
+            '</p><p class="card-text"> Wind Speed: ' +
+            winds +
             "</p></div>"
         );
       }
 
       var date = data["list"]["dt_text"];
     })
-    .catch(err => alert("City Name Not Found!"));
+    // .catch(err => alert("City Name Not Found!"));
 }
 function searchButtonHandler(event) {
   var cityName = event.target.innerText;
   var mainCityName = event.target.innerText;
   $(".icon")
+  .empty()
+  $(".date")
   .empty()
 $(uvInfo).empty();
   forecastCall(cityName);
@@ -274,3 +314,4 @@ $(uvInfo).empty();
 }
 
 listItemEl.on("click", searchButtonHandler);
+

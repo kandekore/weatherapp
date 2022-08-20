@@ -204,3 +204,21 @@ h2.heading {
   text-align: center;
   text-shadow: 1px 1px white;
 }
+.windhum.col-12 {
+  display: flex;
+  width: 80%;
+  margin-left: 10%;
+  margin-bottom: 30px;
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 30px;
+  text-shadow: 1px 1px #fff!important;
+}
+.card-header {
+  text-align: center;
+}
+.date {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 600;
+}
