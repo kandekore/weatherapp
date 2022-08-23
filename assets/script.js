@@ -16,11 +16,10 @@ var list5DayHead = $("#list5dayhead");
 var dateStamp = moment().format("MMM DD, YYYY");
 var uvInfo = document.querySelector(".uvbutton");
 
+//Recent Search and get from local Storage
 
 var recentSearch =[" "]
-// document.getElementById('listitem').innerHTML = window.localStorage.getItem('recentSearch')
 let history = localStorage.getItem("recentSearch")
-// $("#listItemEl").append(history);
 recentSearch.push(history)
 if (history === null) {
   var recentSearch =[" "]
@@ -35,11 +34,7 @@ document.getElementById('listitem').innerHTML = window.localStorage.getItem('rec
       .replace(/\\/g, "");
     }
 
-    
-
-console.log(history)
-
-//var heatel = $('#bullet')
+//Evennt Listener for Search
 
 button.addEventListener("click", function (event) {
   event.preventDefault();
@@ -49,13 +44,8 @@ button.addEventListener("click", function (event) {
   .empty()
   $(".date")
   .empty()
-
  
   currentWeather(event);
- 
-
-
-  
   
 });
 
@@ -67,21 +57,26 @@ function currentWeather(event) {
 
   var cityName = input.value;
   
+  //Add Search History Button
+  
   listItemEl.append(
     "<button class='btn btn-primary'>"+cityName+"</button>"
   );
 
-
+//API FETCH
+  
   fetch(
     "https://api.openweathermap.org/data/2.5/weather?q=" +
       cityName +
       "&appid=50a7aa80fa492fa92e874d23ad061374"
       
   )
-  // .catch(err).alert("City Name Not Found!")
+ 
   
     .then((response) => response.json())
     .then((data) => {
+    
+    //Organise data for HTML 
       
       console.log(data)
       var weatherIcons = data.weather[0].icon;
@@ -98,6 +93,8 @@ function currentWeather(event) {
      var windspeed = data.wind.speed;
   
      
+    
+    //HTML Values
 
       console.log(lat);
       console.log(lon);
@@ -131,7 +128,8 @@ function currentWeather(event) {
         $(".wind").append("<strong>Wind Speed: " +windspeed+"</strong>").text()
       input.value = "";
 
-      var textContent = main.innerHTML;
+    //Add to local Storage Array 
+    var textContent = main.innerHTML;
       var storearr = [];
       storearr.push(textContent);
       localStorage.setItem("cityName", main.innerHTML);
@@ -139,6 +137,8 @@ function currentWeather(event) {
 
       console.log(textContent);
       recentSearch.push("<button class='btn btn-primary'>"+nameValue+"</button>")
+    
+    
 
       function cityStore(){
         
@@ -161,16 +161,18 @@ function currentWeather(event) {
       console.log(JSON.stringify(data));
 
       
-        // `<button class='btn btn-primary'> ${main.innerHTML}</button>`
-        // document.getElementById('listitem').innerHTML = window.localStorage.getItem('recentSearch')
       
 
       UviCall(lat, lon);
       forecastCall(nameValue);
       
     })
+  
+  //Error Catch and alert
    .catch(err => alert("City Name Not Found!"));
 }
+
+//second call using lon and lat for UV index 
 
 const uvForecast = [];
 function UviCall(lat, lon) {
@@ -182,7 +184,6 @@ function UviCall(lat, lon) {
       "&exclude=minutely,hourly,alerts&units=imperial&appid=2fbcfe867dec88d47dfa684266904944"
   )
     .then((response) => response.json())
-    //.then((response) => console.log(response))
     .then((info) => {
       console.log(info);
       $(uvInfo).empty;  
@@ -193,9 +194,11 @@ function UviCall(lat, lon) {
       console.log(info.current.uvi);
       uvi.innerHTML = uvi;
       console.log(uvi.innerHTML);
-      var uvIndHtml = info.current.uvi;
+  
       // var dt = info.current.sunrise;
       var today = moment().format("MMMM Do YYYY");
+    
+    //UV HTML
  $(".date").append(today)
       html +=
         "UV-Index:<button class='btn primarybtn' id= 'uvInfo' > " +
@@ -241,15 +244,15 @@ function UviCall(lat, lon) {
 $(uvInfo).empty();
 
 uvi = "";
+
+//five day forcast call 
 function forecastCall(nameValue) {
-  console.log("this Worked");
   fetch(
     "https://api.openweathermap.org/data/2.5/forecast?q=" +
       nameValue +
       "&appid=2fbcfe867dec88d47dfa684266904944"
   )
     .then((response) => response.json())
-    // .then((response) => console.log(response.data))
     .then((data) => {
       
       list5DayHead.empty();
@@ -272,7 +275,9 @@ function forecastCall(nameValue) {
         var farFive = (temp - 273.15 + 32).toFixed(0) + " &#8457;";
         var weatherIcon = data.list[i].weather[0].icon;
         var fiveDayDesc = data.list[i].weather[0].description;
-        //var dateimgSrc = "https://openweathermap.org/img/wn/" + (this["weatherIcon"+i]) + ".png";
+
+        
+        //HTML
 
         list5Day.append(
           '<div class="card col-2"> <div class="card-body"><h5 class="card-title">' +
@@ -299,6 +304,8 @@ function forecastCall(nameValue) {
     })
     // .catch(err => alert("City Name Not Found!"));
 }
+
+//Retrive search from search Hostory buttons
 function searchButtonHandler(event) {
   var cityName = event.target.innerText;
   var mainCityName = event.target.innerText;
