@@ -1,4 +1,4 @@
-# Module 6 challenge Wether Dashboard
+# Module 6 challenge Weather Dashboard
 
 Criteria 
 
