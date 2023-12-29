@@ -1,25 +1,38 @@
-# Module 6 challenge Weather Dashboard
+# Weather Dashboard - Module 6 Challenge
 
-Criteria 
+## Introduction
+The Weather Dashboard is an interactive web application that provides real-time weather information for any city. It's designed to help users plan their day or week by providing current and future weather conditions.
 
-GIVEN a weather dashboard with form inputs
-WHEN I search for a city
-THEN I am presented with current and future conditions for that city and that city is added to the search history
-WHEN I view current weather conditions for that city
-THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-WHEN I view the UV index
-THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
-WHEN I view future weather conditions for that city
-THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
-WHEN I click on a city in the search history
-THEN I am again presented with current and future conditions for that city
+![Weather Dashboard Screenshot](https://user-images.githubusercontent.com/41653646/186134317-29dd1f5d-be48-4399-ab7d-3ba08c54bcb5.png)
 
-Additional Features
-Temprerature converted ito Celcius & farrenhiet
-Error Alert when city not found
-Min, max and feels like temp added
+**Deployed Application:** [Weather Dashboard Live](https://kandekore.github.io/weatherapp/)
 
+## Features
+- **City Search**: Users can search for any city to get current and future weather conditions.
+- **Current Weather**: Displays city name, date, weather condition icons, temperature, humidity, wind speed, and UV index.
+- **UV Index Indicator**: The UV index is color-coded to indicate favorable, moderate, or severe conditions.
+- **5-Day Forecast**: Shows the 5-day weather forecast including date, weather condition icons, temperature, wind speed, and humidity.
+- **Temperature Units**: Temperature is displayed in both Celsius and Fahrenheit.
+- **Extended Information**: Includes minimum, maximum, and 'feels like' temperatures.
+- **Search History**: Recent searches are stored and can be clicked for quick access.
+- **Error Handling**: Alerts the user if a city is not found.
 
-![Snag_44d82138](https://user-images.githubusercontent.com/41653646/186134317-29dd1f5d-be48-4399-ab7d-3ba08c54bcb5.png)
+## Technologies Used
+- HTML
+- CSS (Bootstrap for styling)
+- JavaScript (jQuery for DOM manipulation)
+- OpenWeatherMap API for weather data
 
-Delpoyed Application https://kandekore.github.io/weatherapp/
+## How to Use
+1. **Search for a City**: Enter the city name in the search box and click 'Submit'.
+2. **View Current Weather**: The dashboard will display current weather details of the searched city.
+3. **Check the 5-Day Forecast**: Scroll down to view the 5-day weather forecast.
+4. **Access Search History**: Click on any city name in the search history panel to view its weather details again.
+
+## Acknowledgments
+Special thanks to the OpenWeatherMap API for providing the weather data used in this project.
+
+---
+
+Feel free to explore and use the Weather Dashboard for your daily weather updates!
+
