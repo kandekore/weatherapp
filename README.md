@@ -1,4 +1,4 @@
-# Weather Dashboard - Module 6 Challenge
+# Weather Dashboard
 
 ## Introduction
 The Weather Dashboard is an interactive web application that provides real-time weather information for any city. It's designed to help users plan their day or week by providing current and future weather conditions.
