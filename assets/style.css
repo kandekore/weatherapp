@@ -110,7 +110,7 @@ a.navbar-brand {
 .bg-light {
   --bs-bg-opacity: 1;
   /* background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity))!important; */
-  background-image: url(https://thumbs.dreamstime.com/b/big-blue-sky-white-clouds-large-hi-res-file-33863007.jpg);
+  background-image: url(/assets/sky.jpg);
   height: 250px;
 }
 .card-header {
