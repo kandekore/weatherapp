@@ -110,8 +110,9 @@ a.navbar-brand {
 .bg-light {
   --bs-bg-opacity: 1;
   /* background-color: rgba(var(--bs-light-rgb),var(--bs-bg-opacity))!important; */
-  background-image: url(/assets/sky.jpg);
+  background-image: url(sky.jpg);
   height: 250px;
+  background-size: cover;
 }
 .card-header {
   background: #7192c5!important;
