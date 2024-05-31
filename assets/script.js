@@ -66,7 +66,7 @@ function currentWeather(event) {
 //API FETCH
   
   fetch(
-    "https://api.openweathermap.org/data/2.5/weather?q=" +
+    "https://api.openweathermap.org/data/3.0/weather?q=" +
       cityName +
       "&appid=50a7aa80fa492fa92e874d23ad061374"
       
@@ -248,7 +248,7 @@ uvi = "";
 //five day forcast call 
 function forecastCall(nameValue) {
   fetch(
-    "https://api.openweathermap.org/data/2.5/forecast?q=" +
+    "https://api.openweathermap.org/data/3.0/forecast?q=" +
       nameValue +
       "&appid=2fbcfe867dec88d47dfa684266904944"
   )
